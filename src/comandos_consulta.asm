@@ -1093,20 +1093,20 @@ consulta_imprimir_detalhes_ap:
     # Guarda o endereço base do bloco
     move    $s0, $a0
 
-    # Imprime o rótulo "AP: "
-    li      $v0, 4
+    # Imprime o rótulo "AP: " via camada de I/O
     la      $a0, texto_info_ap_rotulo
-    syscall
+    # Chama impressao de string via camada de I/O
+    jal     shell_io_imprimir_string
 
-    # Imprime o número do apartamento armazenado no cabeçalho
-    li      $v0, 1
+    # Imprime o número do apartamento armazenado no cabeçalho via I/O
     lw      $a0, OFFSET_AP_NUMERO($s0)
-    syscall
+    # Chama impressao de inteiro via camada de I/O
+    jal     shell_io_imprimir_int
 
-    # Imprime quebra de linha
-    li      $v0, 4
+    # Imprime quebra de linha via I/O
     la      $a0, texto_quebra
-    syscall
+    # Chama impressao de string via camada de I/O
+    jal     shell_io_imprimir_string
 
     # Lê a quantidade de moradores cadastrados
     lw      $s1, OFFSET_AP_QTD_MORADORES($s0)
@@ -1114,10 +1114,10 @@ consulta_imprimir_detalhes_ap:
     # Se a quantidade for maior que zero, desvia para listar moradores
     bnez    $s1, consulta_detalhes_nao_vazio
 
-    # Apartamento vazio: imprime "Apartamento vazio\n"
-    li      $v0, 4
+    # Apartamento vazio: imprime "Apartamento vazio\n" via I/O
     la      $a0, texto_info_ap_vazio
-    syscall
+    # Chama impressao de string via camada de I/O
+    jal     shell_io_imprimir_string
 
     # Encerra a impressão deste apartamento
     j       consulta_detalhes_finalizar
@@ -1125,10 +1125,10 @@ consulta_imprimir_detalhes_ap:
 
 consulta_detalhes_nao_vazio:
 
-    # Imprime o título "Moradores:\n"
-    li      $v0, 4
+    # Imprime o título "Moradores:\n" via camada de I/O
     la      $a0, texto_info_ap_moradores
-    syscall
+    # Chama impressao de string via camada de I/O
+    jal     shell_io_imprimir_string
 
     # Inicia o índice de moradores em zero
     li      $s2, 0
@@ -1142,15 +1142,15 @@ consulta_detalhes_moradores_loop:
     # Verifica se já listou todos os moradores cadastrados
     bge     $s2, $s1, consulta_detalhes_veiculos
 
-    # Imprime o nome do morador atual
-    li      $v0, 4
+    # Imprime o nome do morador atual via camada de I/O
     move    $a0, $s3
-    syscall
+    # Chama impressao de string via camada de I/O
+    jal     shell_io_imprimir_string
 
-    # Imprime quebra de linha
-    li      $v0, 4
+    # Imprime quebra de linha via I/O
     la      $a0, texto_quebra
-    syscall
+    # Chama impressao de string via camada de I/O
+    jal     shell_io_imprimir_string
 
     # Avança para o próximo registro de morador
     addiu   $s3, $s3, TAM_REGISTRO_MORADOR
@@ -1175,10 +1175,12 @@ consulta_detalhes_veiculos:
 
     # Compara se o tipo cadastrado é carro
     li      $t0, TIPO_AUTO_CARRO
+    # Se for carro, desvia para impressao de carro
     beq     $s3, $t0, consulta_detalhes_carro
 
     # Compara se o tipo cadastrado é moto
     li      $t0, TIPO_AUTO_MOTO
+    # Se for moto, desvia para impressao de moto
     beq     $s3, $t0, consulta_detalhes_moto
 
     # Caso seja desconhecido, encerra
@@ -1187,31 +1189,32 @@ consulta_detalhes_veiculos:
 
 consulta_detalhes_carro:
 
-    # Imprime o título "Carro:\n"
-    li      $v0, 4
+    # Imprime o título "Carro:\n" via camada de I/O
     la      $a0, texto_info_ap_carro
-    syscall
+    # Chama impressao de string via camada de I/O
+    jal     shell_io_imprimir_string
 
-    # Imprime o modelo do carro
-    li      $v0, 4
+    # Imprime o modelo do carro via camada de I/O
     addiu   $a0, $s0, OFFSET_AP_AUTOS
-    syscall
+    # Chama impressao de string via camada de I/O
+    jal     shell_io_imprimir_string
 
-    # Imprime o separador " / "
-    li      $v0, 4
+    # Imprime o separador " / " via camada de I/O
     la      $a0, texto_info_ap_separador
-    syscall
+    # Chama impressao de string via camada de I/O
+    jal     shell_io_imprimir_string
 
-    # Imprime a placa do carro
-    li      $v0, 4
+    # Imprime a placa do carro via camada de I/O
     addiu   $a0, $s0, OFFSET_AP_AUTOS
+    # Avanca o ponteiro para o campo da placa do automovel
     addiu   $a0, $a0, TAM_MODELO
-    syscall
+    # Chama impressao de string via camada de I/O
+    jal     shell_io_imprimir_string
 
-    # Imprime quebra de linha
-    li      $v0, 4
+    # Imprime quebra de linha via I/O
     la      $a0, texto_quebra
-    syscall
+    # Chama impressao de string via camada de I/O
+    jal     shell_io_imprimir_string
 
     # Encerra os detalhes do apartamento
     j       consulta_detalhes_finalizar
@@ -1219,10 +1222,10 @@ consulta_detalhes_carro:
 
 consulta_detalhes_moto:
 
-    # Imprime o título "Moto:\n"
-    li      $v0, 4
+    # Imprime o título "Moto:\n" via camada de I/O
     la      $a0, texto_info_ap_moto
-    syscall
+    # Chama impressao de string via camada de I/O
+    jal     shell_io_imprimir_string
 
     # Inicia o índice de motos em zero
     li      $s3, 0
@@ -1236,25 +1239,25 @@ consulta_detalhes_moto_loop:
     # Verifica se já listou todas as motos cadastradas
     bge     $s3, $s2, consulta_detalhes_finalizar
 
-    # Imprime o modelo da moto
-    li      $v0, 4
+    # Imprime o modelo da moto via camada de I/O
     move    $a0, $s4
-    syscall
+    # Chama impressao de string via camada de I/O
+    jal     shell_io_imprimir_string
 
-    # Imprime o separador " / "
-    li      $v0, 4
+    # Imprime o separador " / " via camada de I/O
     la      $a0, texto_info_ap_separador
-    syscall
+    # Chama impressao de string via camada de I/O
+    jal     shell_io_imprimir_string
 
-    # Imprime a placa da moto
-    li      $v0, 4
+    # Imprime a placa da moto via camada de I/O
     addiu   $a0, $s4, TAM_MODELO
-    syscall
+    # Chama impressao de string via camada de I/O
+    jal     shell_io_imprimir_string
 
-    # Imprime quebra de linha
-    li      $v0, 4
+    # Imprime quebra de linha via I/O
     la      $a0, texto_quebra
-    syscall
+    # Chama impressao de string via camada de I/O
+    jal     shell_io_imprimir_string
 
     # Avança para o próximo registro de veículo
     addiu   $s4, $s4, TAM_REGISTRO_AUTO
@@ -1376,39 +1379,41 @@ consulta_info_geral_calculo:
 
     # Multiplica a quantidade de não vazios por cem
     li      $t4, 100
+    # Multiplica quantidade de apartamentos ocupados por cem
     mul     $t5, $s0, $t4
 
     # Divide pelo total de 24 apartamentos para obter a porcentagem inteira
     li      $t6, TOTAL_APARTAMENTOS
+    # Divide pelo total de 24 apartamentos para calcular percentual
     divu    $t5, $t6
 
     # Obtém o percentual inteiro calculado
     mflo    $s2
 
-    # Imprime o texto "Nao vazios: "
-    li      $v0, 4
+    # Imprime o texto "Nao vazios: " via camada de I/O
     la      $a0, texto_info_geral_nao_vazios
-    syscall
+    # Chama impressao de string via camada de I/O
+    jal     shell_io_imprimir_string
 
-    # Imprime a quantidade absoluta de não vazios
-    li      $v0, 1
+    # Imprime a quantidade absoluta de não vazios via I/O
     move    $a0, $s0
-    syscall
+    # Chama impressao de inteiro via camada de I/O
+    jal     shell_io_imprimir_int
 
-    # Imprime o caractere de abertura " ("
-    li      $v0, 4
+    # Imprime o caractere de abertura " (" via camada de I/O
     la      $a0, texto_info_geral_espaco
-    syscall
+    # Chama impressao de string via camada de I/O
+    jal     shell_io_imprimir_string
 
-    # Imprime o percentual de não vazios
-    li      $v0, 1
+    # Imprime o percentual de não vazios via I/O
     move    $a0, $s2
-    syscall
+    # Chama impressao de inteiro via camada de I/O
+    jal     shell_io_imprimir_int
 
-    # Imprime o sufixo "%)\n"
-    li      $v0, 4
+    # Imprime o sufixo "%)\n" via camada de I/O
     la      $a0, texto_info_geral_porcento
-    syscall
+    # Chama impressao de string via camada de I/O
+    jal     shell_io_imprimir_string
 
     # Multiplica a quantidade de vazios por cem
     mul     $t5, $s1, $t4
@@ -1419,30 +1424,30 @@ consulta_info_geral_calculo:
     # Obtém o percentual inteiro de vazios
     mflo    $s2
 
-    # Imprime o texto "Vazios: "
-    li      $v0, 4
+    # Imprime o texto "Vazios: " via camada de I/O
     la      $a0, texto_info_geral_vazios
-    syscall
+    # Chama impressao de string via camada de I/O
+    jal     shell_io_imprimir_string
 
-    # Imprime a quantidade absoluta de vazios
-    li      $v0, 1
+    # Imprime a quantidade absoluta de vazios via I/O
     move    $a0, $s1
-    syscall
+    # Chama impressao de inteiro via camada de I/O
+    jal     shell_io_imprimir_int
 
-    # Imprime o caractere de abertura " ("
-    li      $v0, 4
+    # Imprime o caractere de abertura " (" via camada de I/O
     la      $a0, texto_info_geral_espaco
-    syscall
+    # Chama impressao de string via camada de I/O
+    jal     shell_io_imprimir_string
 
-    # Imprime o percentual de vazios
-    li      $v0, 1
+    # Imprime o percentual de vazios via I/O
     move    $a0, $s2
-    syscall
+    # Chama impressao de inteiro via camada de I/O
+    jal     shell_io_imprimir_int
 
-    # Imprime o sufixo "%)\n"
-    li      $v0, 4
+    # Imprime o sufixo "%)\n" via camada de I/O
     la      $a0, texto_info_geral_porcento
-    syscall
+    # Chama impressao de string via camada de I/O
+    jal     shell_io_imprimir_string
 
     # Define o retorno de sucesso
     li      $v0, OK
