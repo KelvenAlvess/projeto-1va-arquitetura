@@ -79,11 +79,8 @@ main_inicializar_shell:
     # Exibe a apresentação inicial do sistema
     jal     shell_inicializar
 
-    # Executa o menu até o usuário escolher sair
+    # Executa o loop do terminal até o encerramento
     jal     shell_executar
-
-    # Salva em disco o estado atualizado durante a execução
-    jal     persist_salvar
 
     # Fecha qualquer recurso restante da persistência
     jal     persist_encerrar

@@ -6,6 +6,8 @@
 .globl cadastro_remover_morador
 .globl cadastro_adicionar_auto
 .globl cadastro_remover_auto
+.globl cadastro_limpar_ap
+
 
 
 # Seleciona a seção de instruções
@@ -273,11 +275,30 @@ cadastro_limpar_ultimo_morador:
     # Salva a nova quantidade de moradores
     sw      $s2, OFFSET_AP_QTD_MORADORES($s0)
 
+    # Se ainda restarem moradores, mantém os veículos
+    bgtz    $s2, cadastro_remover_morador_ok
+
+    # Se o apartamento ficou vazio (0 moradores), exclui todos os veículos automaticamente (R2/cmd_2)
+    sw      $zero, OFFSET_AP_TIPO_AUTO($s0)
+    sw      $zero, OFFSET_AP_QTD_AUTOS($s0)
+
+    # Carrega o endereço da área reservada aos veículos
+    addiu   $a0, $s0, OFFSET_AP_AUTOS
+
+    # Carrega o tamanho total da área de veículos (3 veículos x 40 bytes = 120 bytes)
+    li      $a1, 120
+
+    # Zera os registros de automóveis do apartamento
+    jal     cadastro_zerar_bytes
+
+cadastro_remover_morador_ok:
+
     # Informa que a remoção foi concluída
     li      $v0, OK
 
     # Finaliza a rotina
     j       cadastro_remover_morador_finalizar
+
 
 
 cadastro_morador_nao_encontrado:
@@ -905,4 +926,37 @@ cadastro_strings_iguais_nao:
     li      $v0, 0
 
     # Retorna ao módulo chamador
+    jr      $ra
+
+
+# ------------------------------------------------------------
+# cadastro_limpar_ap()
+#
+# Exclui todos os moradores e automóveis do apartamento (cmd_5)
+#
+# Entrada:
+#   $a0 = número do apartamento
+#
+# Retorno:
+#   $v0 = OK ou AP_INVALIDO
+# ------------------------------------------------------------
+
+cadastro_limpar_ap:
+
+    # Reserva espaço para o endereço de retorno
+    addiu   $sp, $sp, -4
+
+    # Salva o endereço de retorno da chamada
+    sw      $ra, 0($sp)
+
+    # Invoca a rotina de limpeza completa do bloco mantendo o número
+    jal     dados_limpar_ap
+
+    # Restaura o endereço de retorno
+    lw      $ra, 0($sp)
+
+    # Libera o espaço reservado na pilha
+    addiu   $sp, $sp, 4
+
+    # Retorna o código de status resultante em $v0
     jr      $ra

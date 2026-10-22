@@ -32,6 +32,13 @@ persist_descritor: .word -1
 # Torna a rotina de encerramento acessível aos outros módulos
 .globl persist_encerrar
 
+# Torna a rotina de recarregamento acessível aos outros módulos
+.globl persist_recarregar
+
+# Torna a rotina de formatação volátil acessível aos outros módulos
+.globl persist_formatar
+
+
 
 # Seleciona a seção de instruções
 .text
@@ -451,6 +458,71 @@ persist_encerrar:
 persist_encerrar_sucesso:
 
     # Retorna sucesso
+    li      $v0, OK
+
+    # Retorna ao módulo chamador
+    jr      $ra
+
+
+# ------------------------------------------------------------
+# persist_recarregar()
+#
+# Recarrega as informações salvas do arquivo externo na memória,
+# descartando modificações não salvas (cmd_9)
+#
+# Retorno:
+#   $v0 = OK ou ERRO_ARQUIVO
+# ------------------------------------------------------------
+
+persist_recarregar:
+
+    # Reserva espaço na pilha para o endereço de retorno
+    addiu   $sp, $sp, -4
+
+    # Salva o endereço de retorno
+    sw      $ra, 0($sp)
+
+    # Invoca o carregamento dos registros a partir do arquivo
+    jal     persist_carregar
+
+    # Restaura o endereço de retorno
+    lw      $ra, 0($sp)
+
+    # Libera o espaço reservado na pilha
+    addiu   $sp, $sp, 4
+
+    # Retorna o status resultante em $v0
+    jr      $ra
+
+
+# ------------------------------------------------------------
+# persist_formatar()
+#
+# Apaga todas as informações da execução atual deixando todos os
+# apartamentos vazios em memória, sem alterar o arquivo em disco (cmd_10)
+#
+# Retorno:
+#   $v0 = OK
+# ------------------------------------------------------------
+
+persist_formatar:
+
+    # Reserva espaço na pilha para o endereço de retorno
+    addiu   $sp, $sp, -4
+
+    # Salva o endereço de retorno
+    sw      $ra, 0($sp)
+
+    # Reinicializa toda a tabela de apartamentos em memória
+    jal     dados_inicializar
+
+    # Restaura o endereço de retorno
+    lw      $ra, 0($sp)
+
+    # Libera o espaço reservado na pilha
+    addiu   $sp, $sp, 4
+
+    # Define o retorno de sucesso
     li      $v0, OK
 
     # Retorna ao módulo chamador

@@ -147,6 +147,11 @@
 # Recebe o apartamento em $a0 e o endereço da placa em $a1.
 # Retorna OK, AP_INVALIDO ou AUTO_NAO_ENCONTRADO em $v0.
 
+# cadastro_limpar_ap()
+# Recebe o apartamento em $a0 e zera seus moradores e veículos.
+# Retorna OK ou AP_INVALIDO em $v0.
+
+
 
 # ------------------------------------------------------------
 # ASSINATURAS PÚBLICAS — MÓDULO CONSULTAS
@@ -208,4 +213,12 @@
 
 # persist_encerrar()
 # Fecha arquivos abertos e libera os recursos da persistência.
+# Retorna OK em $v0.
+
+# persist_recarregar()
+# Recarrega os dados do arquivo sobrescrevendo a memória.
+# Retorna OK ou ERRO_ARQUIVO em $v0.
+
+# persist_formatar()
+# Zera todos os apartamentos em memória sem alterar o arquivo em disco.
 # Retorna OK em $v0.
