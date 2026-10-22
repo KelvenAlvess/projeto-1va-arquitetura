@@ -222,3 +222,28 @@
 # persist_formatar()
 # Zera todos os apartamentos em memória sem alterar o arquivo em disco.
 # Retorna OK em $v0.
+
+
+# ------------------------------------------------------------
+# ASSINATURAS PÚBLICAS — MÓDULO MMIO (BÔNUS +1.0 PONTO)
+# ------------------------------------------------------------
+
+# mmio_escrever_char()
+# Transmite um único byte ASCII para o registrador Transmitter Data (0xFFFF000C).
+# Recebe em $a0 o caractere ASCII a ser exibido.
+
+# mmio_ler_char()
+# Aguarda tecla em Receiver Control (0xFFFF0000) e lê de Receiver Data (0xFFFF0004).
+# Retorna em $v0 o byte ASCII da tecla lida.
+
+# mmio_imprimir_string()
+# Imprime cadeia terminada em '\0' no Display MMIO via mmio_escrever_char.
+# Recebe em $a0 o endereço da string na memória.
+
+# mmio_imprimir_int()
+# Converte número inteiro para formato decimal e imprime no Display MMIO.
+# Recebe em $a0 o valor inteiro.
+
+# mmio_ler_linha()
+# Lê linha do Keyboard MMIO com eco visual e suporte a backspace ('\b' ' ' '\b').
+# Recebe em $a0 o endereço do buffer e em $a1 a capacidade máxima em bytes.

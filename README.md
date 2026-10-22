@@ -52,3 +52,19 @@ O ponto de entrada é `main`. Os outros arquivos são incluídos por `main.asm`;
 5. Implementar consultas e listagens.
 6. Adicionar persistência em arquivo e testar caminhos de sucesso e erro.
 
+## 🌟 Bônus: Keyboard e Display MMIO (+1.0 Ponto)
+
+O sistema conta com drivers de baixo nível em `src/mmio.asm` integrados ao terminal `src/shell.asm` e às consultas `src/comandos_consulta.asm`, operando diretamente sobre os registradores de hardware mapeado em memória (Memory-Mapped I/O):
+- `0xFFFF0000`: Receiver Control (polling do bit 0 / Ready)
+- `0xFFFF0004`: Receiver Data (byte ASCII lido do teclado)
+- `0xFFFF0008`: Transmitter Control (polling do bit 0 / Ready)
+- `0xFFFF000C`: Transmitter Data (byte ASCII enviado ao display)
+
+### Como Testar no Simulador MARS:
+1. Abra `src/main.asm` no MARS e monte o programa (**Run > Assemble**).
+2. Acesse o menu **Tools > Keyboard and Display MMIO Simulator**.
+3. Na janela do simulador, clique no botão **Connect to MIPS** (canto inferior esquerdo).
+4. Inicie a execução com **Run > Go**.
+5. No prompt do console, digite `mmio` e pressione Enter para ativar o modo MMIO.
+6. A partir desse instante, digite os comandos na área cinza inferior (*Keyboard*) e visualize o banner `KJP-shell>> ` e todas as saídas no display superior (*Display*), incluindo suporte completo a **Backspace** visual!
+
