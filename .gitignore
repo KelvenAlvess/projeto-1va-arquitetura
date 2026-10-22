@@ -1,0 +1,15 @@
+# Arquivos gerados pelo MARS e pela documentação
+*.class
+*.log
+*.out
+*.txt~
+
+# Saídas temporárias de testes
+testes/saidas/
+
+# Configurações locais de editor/IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
