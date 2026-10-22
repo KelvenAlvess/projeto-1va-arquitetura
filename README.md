@@ -52,7 +52,7 @@ O ponto de entrada é `main`. Os outros arquivos são incluídos por `main.asm`;
 5. Implementar consultas e listagens.
 6. Adicionar persistência em arquivo e testar caminhos de sucesso e erro.
 
-## 🌟 Bônus: Keyboard e Display MMIO (+1.0 Ponto)
+## Bônus: Keyboard e Display MMIO (+1.0 Ponto)
 
 O sistema conta com drivers de baixo nível em `src/mmio.asm` integrados ao terminal `src/shell.asm` e às consultas `src/comandos_consulta.asm`, operando diretamente sobre os registradores de hardware mapeado em memória (Memory-Mapped I/O):
 - `0xFFFF0000`: Receiver Control (polling do bit 0 / Ready)
