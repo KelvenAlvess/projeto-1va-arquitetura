@@ -1,0 +1,22 @@
+KJP-shell>> Nao vazios: 0 (0%)
+Vazios: 24 (100%)
+KJP-shell>> KJP-shell>> KJP-shell>> KJP-shell>> AP: 101
+Moradores:
+Alice Silva
+Bob Santos
+Carro:
+Honda Civic / KJP2026
+KJP-shell>> KJP-shell>> KJP-shell>> KJP-shell>> AP: 102
+Moradores:
+Carlos Lima
+Moto:
+Yamaha Fazer / XYZ9876
+Honda CG / MOT1234
+KJP-shell>> Falha: AP com numero max de automóveis
+KJP-shell>> KJP-shell>> KJP-shell>> AP: 101
+Apartamento vazio
+KJP-shell>> KJP-shell>> AP: 102
+Apartamento vazio
+KJP-shell>> Nao vazios: 0 (0%)
+Vazios: 24 (100%)
+KJP-shell>> KJP-shell>> 
