@@ -210,11 +210,20 @@ dados_ap_invalido:
 
 dados_limpar_ap:
 
-    # Reserva espaço para salvar o endereço de retorno da função
-    addiu   $sp, $sp, -4
+    # Reserva espaço para o endereço de retorno e registradores preservados
+    addiu   $sp, $sp, -12
 
-    # Salva $ra porque esta rotina chamará dados_obter_ap
-    sw      $ra, 0($sp)
+    # Salva o endereço de retorno da função
+    sw      $ra, 8($sp)
+
+    # Salva $s0 para guardar o número do apartamento
+    sw      $s0, 4($sp)
+
+    # Salva $s1 para guardar o endereço base do bloco
+    sw      $s1, 0($sp)
+
+    # Guarda o número do apartamento recebido em $a0
+    move    $s0, $a0
 
     # Procura o endereço do apartamento informado
     jal     dados_obter_ap
@@ -222,10 +231,13 @@ dados_limpar_ap:
     # Se a busca falhar, preserva o código de erro e encerra
     bne     $v0, OK, dados_limpar_finalizar
 
-    # Copia para $t0 o endereço do bloco localizado
+    # Guarda o endereço base do bloco do apartamento localizado
+    move    $s1, $v1
+
+    # Copia para $t0 o endereço inicial de varredura
     move    $t0, $v1
 
-    # Define a quantidade de bytes que será zerada
+    # Define a quantidade total de bytes que será zerada
     li      $t1, TAM_BLOCO_AP
 
 
@@ -245,6 +257,9 @@ dados_loop_limpar_bloco:
     # Continua até que todo o bloco tenha sido zerado
     bgtz    $t1, dados_loop_limpar_bloco
 
+    # Restaura o número do apartamento no cabeçalho do bloco limpo
+    sw      $s0, OFFSET_AP_NUMERO($s1)
+
     # Define o retorno de sucesso da operação
     li      $v0, OK
 
@@ -253,11 +268,18 @@ dados_loop_limpar_bloco:
 
 dados_limpar_finalizar:
 
-    # Restaura o endereço de retorno original
-    lw      $ra, 0($sp)
+    # Restaura o registrador preservado $s1
+    lw      $s1, 0($sp)
 
-    # Libera o espaço usado na pilha
-    addiu   $sp, $sp, 4
+    # Restaura o registrador preservado $s0
+    lw      $s0, 4($sp)
+
+    # Restaura o endereço de retorno original
+    lw      $ra, 8($sp)
+
+    # Libera o espaço reservado na pilha
+    addiu   $sp, $sp, 12
 
     # Retorna para o módulo chamador
     jr      $ra
+

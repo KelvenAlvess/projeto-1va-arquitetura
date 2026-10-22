@@ -1,0 +1,18 @@
+infoGeral
+addMorador --101 --Alice Silva
+addMorador --101 --Bob Santos
+addAuto --101 --c --Honda Civic --KJP2026
+infoAp --101
+addMorador --102 --Carlos Lima
+addAuto --102 --m --Yamaha Fazer --XYZ9876
+addAuto --102 --m --Honda CG --MOT1234
+infoAp --102
+addAuto --102 --c --Carro Errado --CAR0000
+rmvMorador --101 --Alice Silva
+rmvMorador --101 --Bob Santos
+infoAp --101
+limparAp --102
+infoAp --102
+infoGeral
+salvar
+sair

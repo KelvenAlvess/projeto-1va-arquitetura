@@ -1,5 +1,5 @@
 # ============================================================
-# Grupo: Pessoa 1, Pessoa 2 e Pessoa 3
+# Grupo: Kelven Alves, João Pedro Araújo e Integrante 3
 # Atividade: 1VA
 # Disciplina: Arquitetura e Organização de Computadores
 # Semestre: 2026.2
@@ -39,8 +39,12 @@ j       main
 # Inclui as operações de leitura e gravação em arquivo
 .include "persistencia.asm"
 
+# Inclui o driver de hardware de Keyboard e Display MMIO
+.include "mmio.asm"
+
 # Inclui o menu e a comunicação com o usuário
 .include "shell.asm"
+
 
 
 # ------------------------------------------------------------
@@ -79,11 +83,8 @@ main_inicializar_shell:
     # Exibe a apresentação inicial do sistema
     jal     shell_inicializar
 
-    # Executa o menu até o usuário escolher sair
+    # Executa o loop do terminal até o encerramento
     jal     shell_executar
-
-    # Salva em disco o estado atualizado durante a execução
-    jal     persist_salvar
 
     # Fecha qualquer recurso restante da persistência
     jal     persist_encerrar
