@@ -6,7 +6,7 @@
 [CmdletBinding()]
 param(
     [string]$MarsJar = "C:\Users\felli\Downloads\Mars4_5.jar",
-    [ValidateSet("todos", "geral", "stress", "dominio")]
+    [ValidateSet("todos", "geral", "stress", "dominio", "terminal", "persistencia")]
     [string]$Teste = "todos"
 )
 
@@ -38,23 +38,47 @@ if (Test-Path $DataFile) {
 $TestsToRun = @()
 if ($Teste -eq "todos" -or $Teste -eq "geral") {
     $TestsToRun += @{
-        Name     = "Teste Geral (teste_geral.txt)"
-        Input    = "testes\entradas\teste_geral.txt"
-        Expected = "testes\esperados\saida_teste_geral.txt"
+        Name         = "Teste Geral (teste_geral.txt)"
+        IsMultiPhase = $false
+        Input        = "testes\entradas\teste_geral.txt"
+        Expected     = "testes\esperados\saida_teste_geral.txt"
     }
 }
 if ($Teste -eq "todos" -or $Teste -eq "stress") {
     $TestsToRun += @{
-        Name     = "Teste de Estresse ABI (teste_stress_abi.txt)"
-        Input    = "testes\entradas\teste_stress_abi.txt"
-        Expected = "testes\esperados\saida_teste_stress_abi.txt"
+        Name         = "Teste de Estresse ABI (teste_stress_abi.txt)"
+        IsMultiPhase = $false
+        Input        = "testes\entradas\teste_stress_abi.txt"
+        Expected     = "testes\esperados\saida_teste_stress_abi.txt"
     }
 }
 if ($Teste -eq "todos" -or $Teste -eq "dominio") {
     $TestsToRun += @{
-        Name     = "Teste de Regras de Domínio (teste_dominio_regras.txt)"
-        Input    = "testes\entradas\teste_dominio_regras.txt"
-        Expected = "testes\esperados\saida_teste_dominio_regras.txt"
+        Name         = "Teste de Regras de Domínio (teste_dominio_regras.txt)"
+        IsMultiPhase = $false
+        Input        = "testes\entradas\teste_dominio_regras.txt"
+        Expected     = "testes\esperados\saida_teste_dominio_regras.txt"
+    }
+}
+if ($Teste -eq "todos" -or $Teste -eq "terminal") {
+    $TestsToRun += @{
+        Name         = "Teste de Terminal e Consultas (teste_terminal_consultas.txt)"
+        IsMultiPhase = $false
+        Input        = "testes\entradas\teste_terminal_consultas.txt"
+        Expected     = "testes\esperados\saida_teste_terminal_consultas.txt"
+    }
+}
+if ($Teste -eq "todos" -or $Teste -eq "persistencia") {
+    $TestsToRun += @{
+        Name         = "Teste de Ciclo de Persistência (teste_persistencia_ciclo.txt)"
+        IsMultiPhase = $true
+        Phases       = @(
+            "testes\entradas\persistencia_fase1.txt",
+            "testes\entradas\persistencia_fase2.txt",
+            "testes\entradas\persistencia_fase3.txt",
+            "testes\entradas\persistencia_fase4.txt"
+        )
+        Expected     = "testes\esperados\saida_teste_persistencia_ciclo.txt"
     }
 }
 
@@ -82,14 +106,36 @@ try {
 
         $tempOut = [System.IO.Path]::GetTempFileName()
 
-        # Executa no MARS via cmd com codificação UTF-8
-        $cmd = "java -Dfile.encoding=UTF-8 -Dstdout.encoding=UTF-8 -jar `"$MarsJar`" nc src\main.asm < `"$($t.Input)`" > `"$tempOut`""
-        $proc = Start-Process -FilePath "cmd.exe" -ArgumentList "/c `"$cmd`"" -Wait -NoNewWindow -PassThru
+        if ($t.IsMultiPhase) {
+            # Executa fases consecutivas mantendo o arquivo de dados entre elas
+            $concatOut = ""
+            $hasPhaseError = $false
+            foreach ($phaseFile in $t.Phases) {
+                $phaseTempOut = [System.IO.Path]::GetTempFileName()
+                $cmd = "java -Dfile.encoding=UTF-8 -Dstdout.encoding=UTF-8 -jar `"$MarsJar`" nc src\main.asm < `"$phaseFile`" > `"$phaseTempOut`""
+                $proc = Start-Process -FilePath "cmd.exe" -ArgumentList "/c `"$cmd`"" -Wait -NoNewWindow -PassThru
+                if ($proc.ExitCode -ne 0) {
+                    Write-Host "  -> ERRO na fase $($phaseFile): código $($proc.ExitCode)" -ForegroundColor Red
+                    $hasPhaseError = $true
+                }
+                $concatOut += [System.IO.File]::ReadAllText($phaseTempOut)
+                Remove-Item $phaseTempOut -Force
+            }
+            if ($hasPhaseError) {
+                $AllPassed = $false
+                continue
+            }
+            [System.IO.File]::WriteAllText($tempOut, $concatOut)
+        } else {
+            # Executa no MARS via cmd com codificação UTF-8
+            $cmd = "java -Dfile.encoding=UTF-8 -Dstdout.encoding=UTF-8 -jar `"$MarsJar`" nc src\main.asm < `"$($t.Input)`" > `"$tempOut`""
+            $proc = Start-Process -FilePath "cmd.exe" -ArgumentList "/c `"$cmd`"" -Wait -NoNewWindow -PassThru
 
-        if ($proc.ExitCode -ne 0) {
-            Write-Host "  -> ERRO: O simulador encerrou com código $($proc.ExitCode)" -ForegroundColor Red
-            $AllPassed = $false
-            continue
+            if ($proc.ExitCode -ne 0) {
+                Write-Host "  -> ERRO: O simulador encerrou com código $($proc.ExitCode)" -ForegroundColor Red
+                $AllPassed = $false
+                continue
+            }
         }
 
         $expectedText = [System.IO.File]::ReadAllText((Join-Path $WorkspaceRoot $t.Expected)).Replace("`r`n", "`n")

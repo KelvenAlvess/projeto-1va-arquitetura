@@ -1,0 +1,6 @@
+infoGeral
+addMorador --101 --Morador Persistente Um
+addAuto --101 --c --Fusca Azul --FUS1970
+addMorador --201 --Morador Persistente Dois
+salvar
+sair

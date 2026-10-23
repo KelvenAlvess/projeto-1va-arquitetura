@@ -21,6 +21,7 @@ Este documento detalha o conjunto oficial de casos de teste para validação no 
 | **CT-011** | R3, cmd_8, 9, 10 | Ciclo de vida de persistência em disco | `salvar` grava em disco; `formatar` zera apenas RAM; `recarregar` restaura arquivo anterior |
 | **CT-012** | R1, R2, R6, cmd_1 a 7 | Bateria exaustiva de regras de domínio, limites, cascata e integridade | Exercitar lotação de 6 moradores compostos, 7º rejeitado, exclusividade carro/moto, 3 motos, tipo inválido, remoção inexistente, purga compulsória de veículos e não-corrupção dos demais 23 APs |
 | **CT-013** | R4, R5, R6, cmd_1, 3, 5, 6, 7 | Validação de terminal, delimitador ` --` e consultas escalonadas | Exercitar comandos inválidos, nomes compostos com espaços, `infoAp` vazio/ocupado/`--all` e `infoGeral` em 5 níveis de ocupação (0%, 25%, 50%, 75%, 100%) |
+| **CT-014** | R3, cmd_8, 9, 10 | Ciclo completo de persistência multi-processo com reinicializações frias | Boot a frio sem arquivo, gravação permanente com `salvar`, restauração automática em novo processo, descarte com `recarregar`, volatilidade de `formatar` na RAM e purga com `formatar` + `salvar` |
 
 ---
 
@@ -135,3 +136,12 @@ Este documento detalha o conjunto oficial de casos de teste para validação no 
      - 100%: +6 APs (1001, 1002, 1101, 1102, 1201, 1202) = 24 ocupados $\rightarrow$ `Nao vazios: 24 (100%)`, `Vazios: 0 (0%)`.
   5. **Varredura Completa `infoAp --all`:** Exibe ordenadamente todos os 24 apartamentos com seus moradores.
   6. **Reset e Encerramento:** `formatar` retorna a 0% e `sair` finaliza.
+
+### CT-014 — Ciclo Completo de Persistência Multi-Processo
+- **Arquivos:** `src/testes/teste_persistencia_ciclo.txt`, `testes/entradas/teste_persistencia_ciclo.txt`, `testes/esperados/saida_teste_persistencia_ciclo.txt`
+- **Comando de Execução:** `powershell -File scripts/executar_testes.ps1 -Teste persistencia`
+- **Fases Executadas com Múltiplas Instâncias do MARS 4.5:**
+  1. **Fase 1 (Boot Limpo sem Arquivo):** Inicia sem `condominio.dat`; `infoGeral` comprova inicialização vazia; cadastra dados no AP 101 e AP 201; executa `salvar` e encerra com `sair`.
+  2. **Fase 2 (Boot Frio e Descarte Volátil):** Nova instância do MARS; `infoAp --101` e `infoAp --201` comprovam restauração automática; adiciona morador volátil no AP 301; executa `recarregar` comprovando descarte de alterações não salvas; executa `formatar` (RAM vazia); encerra com `sair` sem salvar.
+  3. **Fase 3 (Comprovação de Integridade em Disco):** Nova instância do MARS; `infoAp --101` e `infoAp --201` comprovam que o `formatar` da Fase 2 foi estritamente volátil na RAM e NÃO apagou o disco; executa `formatar` seguido de `salvar` e `sair`.
+  4. **Fase 4 (Comprovação de Purga em Disco):** Nova instância do MARS; `infoGeral` e `infoAp --all` comprovam que todos os 24 apartamentos estão vazios após a gravação explícita da limpeza.
