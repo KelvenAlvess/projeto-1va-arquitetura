@@ -39,11 +39,10 @@ infoAp --201
 rmvMorador --201 --Beatriz Helena Lima
 infoAp --201
 rmvAuto --201 --ABC1234
-infoAp --101
-infoAp --1202
-infoAp --301
+infoAp --all
 limparAp --101
 limparAp --301
 limparAp --1202
 infoGeral
+infoAp --all
 sair

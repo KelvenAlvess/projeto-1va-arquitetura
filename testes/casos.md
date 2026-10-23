@@ -111,6 +111,8 @@ Este documento detalha o conjunto oficial de casos de teste para validação no 
      - Remove o último morador (`Beatriz Helena Lima`).
      - `infoAp --201` comprova status `Apartamento vazio`.
      - `rmvAuto --201 --ABC1234` retorna `Falha: automóvel nao encontrado`, provando a purga compulsória de veículos.
-  10. **Preservação dos Demais Apartamentos:**
-      - Verifica AP 101, AP 1202 e AP 301 totalmente íntegros.
-      - Limpa os apartamentos e valida com `infoGeral` o retorno para 24 vazios (100%).
+  10. **Preservação e Comprovação Individual dos Demais 23 Apartamentos:**
+      - Executa `infoAp --all` logo após as operações no AP 201: valida que os sentinelas (AP 101, AP 301, AP 1202) e o AP 201 estão nos estados exatos esperados, e comprova individualmente que todos os outros 20 apartamentos permanecem inalterados e vazios.
+      - Limpa os apartamentos remanescentes (`limparAp` em 101, 301 e 1202).
+      - Executa `infoGeral` confirmando 0 não vazios (0%) e 24 vazios (100%).
+      - Executa `infoAp --all` final comprovando que todos os 24 apartamentos estão no estado `Apartamento vazio`.

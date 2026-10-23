@@ -68,15 +68,105 @@ Moradores:
 Morador Sentinela Um
 Carro:
 Carro Sentinela / SEN1000
-KJP-shell>> AP: 1202
-Moradores:
-Morador Sentinela Doze
-KJP-shell>> AP: 301
+AP: 102
+Apartamento vazio
+AP: 201
+Apartamento vazio
+AP: 202
+Apartamento vazio
+AP: 301
 Moradores:
 Roberto Carlos Braga
 Moto:
 Honda CG160 / MOT1001
 Kawasaki Ninja / MOT1003
+AP: 302
+Apartamento vazio
+AP: 401
+Apartamento vazio
+AP: 402
+Apartamento vazio
+AP: 501
+Apartamento vazio
+AP: 502
+Apartamento vazio
+AP: 601
+Apartamento vazio
+AP: 602
+Apartamento vazio
+AP: 701
+Apartamento vazio
+AP: 702
+Apartamento vazio
+AP: 801
+Apartamento vazio
+AP: 802
+Apartamento vazio
+AP: 901
+Apartamento vazio
+AP: 902
+Apartamento vazio
+AP: 1001
+Apartamento vazio
+AP: 1002
+Apartamento vazio
+AP: 1101
+Apartamento vazio
+AP: 1102
+Apartamento vazio
+AP: 1201
+Apartamento vazio
+AP: 1202
+Moradores:
+Morador Sentinela Doze
 KJP-shell>> KJP-shell>> KJP-shell>> KJP-shell>> Nao vazios: 0 (0%)
 Vazios: 24 (100%)
+KJP-shell>> AP: 101
+Apartamento vazio
+AP: 102
+Apartamento vazio
+AP: 201
+Apartamento vazio
+AP: 202
+Apartamento vazio
+AP: 301
+Apartamento vazio
+AP: 302
+Apartamento vazio
+AP: 401
+Apartamento vazio
+AP: 402
+Apartamento vazio
+AP: 501
+Apartamento vazio
+AP: 502
+Apartamento vazio
+AP: 601
+Apartamento vazio
+AP: 602
+Apartamento vazio
+AP: 701
+Apartamento vazio
+AP: 702
+Apartamento vazio
+AP: 801
+Apartamento vazio
+AP: 802
+Apartamento vazio
+AP: 901
+Apartamento vazio
+AP: 902
+Apartamento vazio
+AP: 1001
+Apartamento vazio
+AP: 1002
+Apartamento vazio
+AP: 1101
+Apartamento vazio
+AP: 1102
+Apartamento vazio
+AP: 1201
+Apartamento vazio
+AP: 1202
+Apartamento vazio
 KJP-shell>> 
