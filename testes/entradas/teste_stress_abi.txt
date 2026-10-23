@@ -1,0 +1,47 @@
+formatar
+infoGeral
+addMorador --101 --Alice Silva
+addMorador --101 --Bob Santos
+addAuto --101 --c --Honda Civic --ABC1234
+infoAp --101
+addMorador --102 --Carlos Oliveira
+addAuto --102 --m --Yamaha MT03 --MOT1111
+addAuto --102 --m --Honda CB500 --MOT2222
+addAuto --102 --m --Kawasaki Ninja --MOT3333
+addAuto --102 --m --Suzuki GSX --MOT4444
+infoAp --102
+addAuto --102 --c --Fusca --FUS1234
+addMorador --1201 --Daniel Costa
+addMorador --1201 --Elena Souza
+addAuto --1201 --c --Toyota Corolla --XYZ9999
+infoAp --1201
+addMorador --1202 --Fabio Rocha
+infoAp --1202
+addMorador --201 --Morador Um
+addMorador --201 --Morador Dois
+addMorador --201 --Morador Tres
+addMorador --201 --Morador Quatro
+addMorador --201 --Morador Cinco
+addMorador --201 --Morador Seis
+addMorador --201 --Morador Sete
+infoAp --201
+rmvAuto --102 --MOT2222
+infoAp --102
+rmvMorador --101 --Alice Silva
+infoAp --101
+salvar
+formatar
+infoGeral
+infoAp --101
+recarregar
+infoAp --101
+rmvMorador --101 --Bob Santos
+infoAp --101
+limparAp --102
+infoAp --102
+limparAp --201
+limparAp --1201
+limparAp --1202
+infoGeral
+salvar
+sair

@@ -1,0 +1,30 @@
+# Fase 1: Boot limpo sem arquivo de dados, cadastro e salvamento
+infoGeral
+addMorador --101 --Morador Persistente Um
+addAuto --101 --c --Fusca Azul --FUS1970
+addMorador --201 --Morador Persistente Dois
+salvar
+sair
+
+# Fase 2: Reinicializacao a frio (restaura dados), mutacao provisoria, descarte com recarregar e formatar volatil
+infoAp --101
+infoAp --201
+addMorador --301 --Morador Volatil
+infoAp --301
+recarregar
+infoAp --301
+formatar
+infoGeral
+sair
+
+# Fase 3: Reinicializacao a frio (comprova dados intactos no disco), formatar na memoria e salvar no disco
+infoAp --101
+infoAp --201
+formatar
+salvar
+sair
+
+# Fase 4: Reinicializacao a frio com disco purgado e comprovacao de condominio vazio
+infoGeral
+infoAp --all
+sair

@@ -1,0 +1,62 @@
+KJP-shell>> KJP-shell>> Nao vazios: 0 (0%)
+Vazios: 24 (100%)
+KJP-shell>> KJP-shell>> KJP-shell>> KJP-shell>> AP: 101
+Moradores:
+Alice Silva
+Bob Santos
+Carro:
+Honda Civic / ABC1234
+KJP-shell>> KJP-shell>> KJP-shell>> KJP-shell>> KJP-shell>> Falha: AP com numero max de automóveis
+KJP-shell>> AP: 102
+Moradores:
+Carlos Oliveira
+Moto:
+Yamaha MT03 / MOT1111
+Honda CB500 / MOT2222
+Kawasaki Ninja / MOT3333
+KJP-shell>> Falha: AP com numero max de automóveis
+KJP-shell>> KJP-shell>> KJP-shell>> KJP-shell>> AP: 1201
+Moradores:
+Daniel Costa
+Elena Souza
+Carro:
+Toyota Corolla / XYZ9999
+KJP-shell>> KJP-shell>> AP: 1202
+Moradores:
+Fabio Rocha
+KJP-shell>> KJP-shell>> KJP-shell>> KJP-shell>> KJP-shell>> KJP-shell>> KJP-shell>> Falha: AP com numero max de moradores
+KJP-shell>> AP: 201
+Moradores:
+Morador Um
+Morador Dois
+Morador Tres
+Morador Quatro
+Morador Cinco
+Morador Seis
+KJP-shell>> KJP-shell>> AP: 102
+Moradores:
+Carlos Oliveira
+Moto:
+Yamaha MT03 / MOT1111
+Kawasaki Ninja / MOT3333
+KJP-shell>> KJP-shell>> AP: 101
+Moradores:
+Bob Santos
+Carro:
+Honda Civic / ABC1234
+KJP-shell>> KJP-shell>> KJP-shell>> Nao vazios: 0 (0%)
+Vazios: 24 (100%)
+KJP-shell>> AP: 101
+Apartamento vazio
+KJP-shell>> KJP-shell>> AP: 101
+Moradores:
+Bob Santos
+Carro:
+Honda Civic / ABC1234
+KJP-shell>> KJP-shell>> AP: 101
+Apartamento vazio
+KJP-shell>> KJP-shell>> AP: 102
+Apartamento vazio
+KJP-shell>> KJP-shell>> KJP-shell>> KJP-shell>> Nao vazios: 0 (0%)
+Vazios: 24 (100%)
+KJP-shell>> KJP-shell>> 
