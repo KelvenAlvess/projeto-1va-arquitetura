@@ -20,6 +20,7 @@ Este documento detalha o conjunto oficial de casos de teste para validação no 
 | **CT-010** | cmd_7, R6 | Panorama geral com `infoGeral` | Total de 24 apartamentos e porcentagens exatas |
 | **CT-011** | R3, cmd_8, 9, 10 | Ciclo de vida de persistência em disco | `salvar` grava em disco; `formatar` zera apenas RAM; `recarregar` restaura arquivo anterior |
 | **CT-012** | R1, R2, R6, cmd_1 a 7 | Bateria exaustiva de regras de domínio, limites, cascata e integridade | Exercitar lotação de 6 moradores compostos, 7º rejeitado, exclusividade carro/moto, 3 motos, tipo inválido, remoção inexistente, purga compulsória de veículos e não-corrupção dos demais 23 APs |
+| **CT-013** | R4, R5, R6, cmd_1, 3, 5, 6, 7 | Validação de terminal, delimitador ` --` e consultas escalonadas | Exercitar comandos inválidos, nomes compostos com espaços, `infoAp` vazio/ocupado/`--all` e `infoGeral` em 5 níveis de ocupação (0%, 25%, 50%, 75%, 100%) |
 
 ---
 
@@ -116,3 +117,21 @@ Este documento detalha o conjunto oficial de casos de teste para validação no 
       - Limpa os apartamentos remanescentes (`limparAp` em 101, 301 e 1202).
       - Executa `infoGeral` confirmando 0 não vazios (0%) e 24 vazios (100%).
       - Executa `infoAp --all` final comprovando que todos os 24 apartamentos estão no estado `Apartamento vazio`.
+
+### CT-013 — Validação de Terminal, Delimitador e Ocupação Escalonada
+- **Arquivos:** `src/testes/teste_terminal_consultas.txt`, `testes/entradas/teste_terminal_consultas.txt`, `testes/esperados/saida_teste_terminal_consultas.txt`
+- **Comando de Execução:** `powershell -File scripts/executar_testes.ps1 -Teste terminal`
+- **Roteiro e Critérios:**
+  1. **Comandos Desconhecidos e Erro de Sintaxe:** `sair_invalido`, `ajuda`, `info`, `teste --101`, `addMorador` sem opções produzem rigorosamente `Comando invalido`.
+  2. **Delimitador `" --"` e Nomes Compostos com Espaços:** `addMorador --101 --Maria Antonieta de Albuquerque` e `addAuto --101 --c --Chevrolet Onix Plus Sedan --ABC1D23`.
+  3. **Formatação Condicional de `infoAp`:**
+     - Vazio: `infoAp --102` produz 2 linhas exatas do PDF (`AP: 102` e `Apartamento vazio`).
+     - Ocupado: `infoAp --101` exibe seções `AP: 101`, `Moradores:` e `Carro:` sem seções de moto.
+  4. **Cálculo Percentual de `infoGeral` em 5 Níveis de Ocupação:**
+     - 0%: `Nao vazios: 0 (0%)`, `Vazios: 24 (100%)`.
+     - 25%: AP 101 já ocupado + 5 novos APs (102, 201, 202, 301, 302) = 6 ocupados $\rightarrow$ `Nao vazios: 6 (25%)`, `Vazios: 18 (75%)`.
+     - 50%: +6 APs (401, 402, 501, 502, 601, 602) = 12 ocupados $\rightarrow$ `Nao vazios: 12 (50%)`, `Vazios: 12 (50%)`.
+     - 75%: +6 APs (701, 702, 801, 802, 901, 902) = 18 ocupados $\rightarrow$ `Nao vazios: 18 (75%)`, `Vazios: 6 (25%)`.
+     - 100%: +6 APs (1001, 1002, 1101, 1102, 1201, 1202) = 24 ocupados $\rightarrow$ `Nao vazios: 24 (100%)`, `Vazios: 0 (0%)`.
+  5. **Varredura Completa `infoAp --all`:** Exibe ordenadamente todos os 24 apartamentos com seus moradores.
+  6. **Reset e Encerramento:** `formatar` retorna a 0% e `sair` finaliza.

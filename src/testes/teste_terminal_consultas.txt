@@ -1,0 +1,41 @@
+formatar
+sair_invalido
+ajuda
+info
+teste --101
+addMorador
+addMorador --101 --Maria Antonieta de Albuquerque
+addAuto --101 --c --Chevrolet Onix Plus Sedan --ABC1D23
+infoAp --102
+infoAp --101
+addMorador --102 --Morador Cem Dois
+addMorador --201 --Morador Duzentos Um
+addMorador --202 --Morador Duzentos Dois
+addMorador --301 --Morador Trezentos Um
+addMorador --302 --Morador Trezentos Dois
+infoGeral
+addMorador --401 --Morador Quatrocentos Um
+addMorador --402 --Morador Quatrocentos Dois
+addMorador --501 --Morador Quinhentos Um
+addMorador --502 --Morador Quinhentos Dois
+addMorador --601 --Morador Seiscentos Um
+addMorador --602 --Morador Seiscentos Dois
+infoGeral
+addMorador --701 --Morador Setecentos Um
+addMorador --702 --Morador Setecentos Dois
+addMorador --801 --Morador Oitocentos Um
+addMorador --802 --Morador Oitocentos Dois
+addMorador --901 --Morador Novecentos Um
+addMorador --902 --Morador Novecentos Dois
+infoGeral
+addMorador --1001 --Morador Mil Um
+addMorador --1002 --Morador Mil Dois
+addMorador --1101 --Morador Mil Cento Um
+addMorador --1102 --Morador Mil Cento Dois
+addMorador --1201 --Morador Mil Duzentos Um
+addMorador --1202 --Morador Mil Duzentos Dois
+infoGeral
+infoAp --all
+formatar
+infoGeral
+sair
