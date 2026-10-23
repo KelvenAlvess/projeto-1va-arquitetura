@@ -60,13 +60,13 @@
 
 
 # Tamanho do cabeçalho de cada apartamento
-.eqv TAM_CABECALHO_AP             16
+.eqv TAM_CABECALHO_AP             16  # Define a constante simbólica TAM_CABECALHO_AP             16.
 
 # Cada registro de morador ocupa o espaço reservado para um nome
-.eqv TAM_REGISTRO_MORADOR         64
+.eqv TAM_REGISTRO_MORADOR         64  # Define a constante simbólica TAM_REGISTRO_MORADOR         64.
 
 # Cada registro possui modelo e placa
-.eqv TAM_REGISTRO_AUTO            40
+.eqv TAM_REGISTRO_AUTO            40  # Define a constante simbólica TAM_REGISTRO_AUTO            40.
 
 # ------------------------------------------------------------
 # OFFSETS DO BLOCO DE APARTAMENTO
