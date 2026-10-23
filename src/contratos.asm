@@ -1,7 +1,11 @@
-# Descrição:
-#   Contratos compartilhados entre os módulos do sistema de
-#   gerenciamento do condomínio em MIPS Assembly.
-
+# ============================================================
+# Grupo: Kelven Alves, João Pedro Araújo e Erik Vinicius Gomes de Lima
+# Atividade: Projeto 01 - 1VA
+# Disciplina: Arquitetura e Organização de Computadores (UFRPE - 2026.2)
+# Professor: Prof. Vítor A Coutinho
+# Arquivo: contratos.asm
+# Descrição: constantes, limites do dominio, convencoes compartilhadas e codigos de retorno
+# ============================================================
 .eqv OK                         0   # Operação concluída corretamente
 .eqv AP_INVALIDO                1   # Número de apartamento inexistente
 .eqv MORADOR_NAO_ENCONTRADO     2   # Morador procurado não foi localizado

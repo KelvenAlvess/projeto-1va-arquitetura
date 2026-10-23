@@ -1,14 +1,11 @@
 # ============================================================
-# Grupo: Kelven Alves, João Pedro Araújo e Integrante 3
-# Atividade: 1VA (Bônus MMIO +1.0 Ponto)
-# Disciplina: Arquitetura e Organização de Computadores
-# Semestre: 2026.2
+# Grupo: Kelven Alves, João Pedro Araújo e Erik Vinicius Gomes de Lima
+# Atividade: Projeto 01 - 1VA
+# Disciplina: Arquitetura e Organização de Computadores (UFRPE - 2026.2)
+# Professor: Prof. Vítor A Coutinho
 # Arquivo: mmio.asm
-# Descrição: driver de baixo nível para Memory-Mapped I/O
-#            (Keyboard MMIO e Display MMIO) no simulador MARS
+# Descrição: driver de baixo nivel de Keyboard e Display MMIO no MARS (Bonus +1.0 Ponto)
 # ============================================================
-
-
 # ------------------------------------------------------------
 # CONSTANTES DE HARDWARE MAPEADO EM MEMÓRIA (MMIO)
 # ------------------------------------------------------------

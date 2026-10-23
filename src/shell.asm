@@ -1,15 +1,11 @@
 # ============================================================
-# Grupo: Kelven Alves, João Pedro Araújo e Integrante 3
-# Atividade: 1VA
-# Disciplina: Arquitetura e Organização de Computadores
-# Semestre: 2026.2
+# Grupo: Kelven Alves, João Pedro Araújo e Erik Vinicius Gomes de Lima
+# Atividade: Projeto 01 - 1VA
+# Disciplina: Arquitetura e Organização de Computadores (UFRPE - 2026.2)
+# Professor: Prof. Vítor A Coutinho
 # Arquivo: shell.asm
-# Descrição: terminal interativo (REPL), banner customizado,
-#            parser de opções com delimitador " --" e
-#            despachante dos 10 comandos oficiais do sistema
+# Descrição: terminal interativo (REPL), parser de delimitador ' --' e despacho dos comandos
 # ============================================================
-
-
 # ------------------------------------------------------------
 # ÁREA DE DADOS DO MÓDULO
 # ------------------------------------------------------------

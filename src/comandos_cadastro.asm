@@ -1,7 +1,11 @@
-# Descrição: cadastro e remoção de moradores e automóveis
-
-
-# Torna públicas as rotinas utilizadas pelos demais módulos
+# ============================================================
+# Grupo: Kelven Alves, João Pedro Araújo e Erik Vinicius Gomes de Lima
+# Atividade: Projeto 01 - 1VA
+# Disciplina: Arquitetura e Organização de Computadores (UFRPE - 2026.2)
+# Professor: Prof. Vítor A Coutinho
+# Arquivo: comandos_cadastro.asm
+# Descrição: regras de negocio de cadastro e remocao de moradores, veiculos e cascata compulsoria
+# ============================================================
 .globl cadastro_adicionar_morador
 .globl cadastro_remover_morador
 .globl cadastro_adicionar_auto

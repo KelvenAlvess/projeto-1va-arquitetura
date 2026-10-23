@@ -1,12 +1,11 @@
-
-# Descrição: consultas e listagens dos apartamentos, moradores
-#     	     e automóveis cadastrados
-
-
-# ------------------------------------------------------------
-# ÁREA DE DADOS DO MÓDULO
-# ------------------------------------------------------------
-
+# ============================================================
+# Grupo: Kelven Alves, João Pedro Araújo e Erik Vinicius Gomes de Lima
+# Atividade: Projeto 01 - 1VA
+# Disciplina: Arquitetura e Organização de Computadores (UFRPE - 2026.2)
+# Professor: Prof. Vítor A Coutinho
+# Arquivo: comandos_consulta.asm
+# Descrição: consultas formatadas de apartamentos (infoAp, --all) e panorama geral (infoGeral)
+# ============================================================
 .data
 
 # Título exibido antes da listagem geral dos apartamentos

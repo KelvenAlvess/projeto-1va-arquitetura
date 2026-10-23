@@ -1,14 +1,11 @@
 # ============================================================
-# Grupo: Kelven Alves, João Pedro Araújo e Integrante 3
-# Atividade: 1VA
-# Disciplina: Arquitetura e Organização de Computadores
-# Semestre: 2026.2
+# Grupo: Kelven Alves, João Pedro Araújo e Erik Vinicius Gomes de Lima
+# Atividade: Projeto 01 - 1VA
+# Disciplina: Arquitetura e Organização de Computadores (UFRPE - 2026.2)
+# Professor: Prof. Vítor A Coutinho
 # Arquivo: main.asm
-# Descrição: ponto de entrada, inicialização dos módulos,
-#            execução do terminal e encerramento do sistema
+# Descrição: ponto de entrada, bootstrap do sistema, inicializacao e encerramento
 # ============================================================
-
-
 # Inclui as constantes e os contratos compartilhados
 .include "contratos.asm"
 

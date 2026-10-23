@@ -1,12 +1,11 @@
-# Descrição: leitura e gravação do estado dos apartamentos em
-#            arquivo usando as chamadas de sistema do MARS
-
-
-
-# ------------------------------------------------------------
-# ÁREA DE DADOS DO MÓDULO
-# ------------------------------------------------------------
-
+# ============================================================
+# Grupo: Kelven Alves, João Pedro Araújo e Erik Vinicius Gomes de Lima
+# Atividade: Projeto 01 - 1VA
+# Disciplina: Arquitetura e Organização de Computadores (UFRPE - 2026.2)
+# Professor: Prof. Vítor A Coutinho
+# Arquivo: persistencia.asm
+# Descrição: gerenciamento de estado em disco (salvar, recarregar, formatar) e I/O binario
+# ============================================================
 .data
 
 # Nome do arquivo utilizado para guardar o estado do condomínio

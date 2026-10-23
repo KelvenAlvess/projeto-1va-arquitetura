@@ -1,7 +1,11 @@
-#  Descrição: reserva e manutenção dos blocos de memória dos
-#  apartamentos do condomínio.
-
-# Inclui a área de dados deste módulo
+# ============================================================
+# Grupo: Kelven Alves, João Pedro Araújo e Erik Vinicius Gomes de Lima
+# Atividade: Projeto 01 - 1VA
+# Disciplina: Arquitetura e Organização de Computadores (UFRPE - 2026.2)
+# Professor: Prof. Vítor A Coutinho
+# Arquivo: dados.asm
+# Descrição: reserva da tabela de 12.480 bytes, inicializacao e mapeamento O(1) dos 24 apartamentos
+# ============================================================
 .data
 
 # Alinha o início da tabela em endereço múltiplo de quatro bytes
