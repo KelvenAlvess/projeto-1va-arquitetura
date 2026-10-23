@@ -115,14 +115,14 @@ mmio_ler_char_wait:
 
 mmio_imprimir_string:
 
-    # Reserva espaço na pilha para retorno e registradores salvos
-    addiu   $sp, $sp, -12
+    # Reserva espaço na pilha para retorno e registradores salvos (16 bytes, múltiplo de 8)
+    addiu   $sp, $sp, -16
 
     # Salva o endereço de retorno
-    sw      $ra, 8($sp)
+    sw      $ra, 12($sp)
 
     # Salva o registrador $s0
-    sw      $s0, 4($sp)
+    sw      $s0, 8($sp)
 
     # Guarda o ponteiro da string
     move    $s0, $a0
@@ -149,13 +149,13 @@ mmio_imprimir_string_loop:
 mmio_imprimir_string_fim:
 
     # Restaura o registrador $s0
-    lw      $s0, 4($sp)
+    lw      $s0, 8($sp)
 
     # Restaura o endereço de retorno
-    lw      $ra, 8($sp)
+    lw      $ra, 12($sp)
 
     # Libera o espaço reservado na pilha
-    addiu   $sp, $sp, 12
+    addiu   $sp, $sp, 16
 
     # Retorna ao chamador
     jr      $ra
@@ -171,20 +171,20 @@ mmio_imprimir_string_fim:
 
 mmio_imprimir_int:
 
-    # Reserva espaço na pilha para retorno e registradores preservados
-    addiu   $sp, $sp, -28
+    # Reserva espaço na pilha para retorno e registradores preservados (32 bytes, múltiplo de 8)
+    addiu   $sp, $sp, -32
 
     # Salva o endereço de retorno
-    sw      $ra, 24($sp)
+    sw      $ra, 28($sp)
 
     # Salva o valor original
-    sw      $s0, 20($sp)
+    sw      $s0, 24($sp)
 
     # Salva o contador de dígitos
-    sw      $s1, 16($sp)
+    sw      $s1, 20($sp)
 
     # Salva o divisor base 10
-    sw      $s2, 12($sp)
+    sw      $s2, 16($sp)
 
     # Guarda o valor inteiro recebido
     move    $s0, $a0
@@ -219,7 +219,7 @@ mmio_int_nao_zero:
 
 mmio_int_positivo:
 
-    # Inicializa a contagem de dígitos gerados na pilha
+    # Inicializa a contagem de dígitos gerados no buffer local
     li      $s1, 0
 
     # Carrega a constante decimal 10 para divisões sucessivas
@@ -243,13 +243,11 @@ mmio_int_loop_div:
     # Converte o dígito para o código ASCII correspondente (+48)
     addiu   $t0, $t0, 48
 
-    # Reserva 4 bytes na pilha para armazenar o dígito
-    addiu   $sp, $sp, -4
+    # Armazena o dígito no buffer local alocado no frame (sem alterar $sp)
+    addu    $t1, $sp, $s1
+    sb      $t0, 0($t1)
 
-    # Salva o dígito ASCII no topo da pilha
-    sw      $t0, 0($sp)
-
-    # Incrementa a quantidade de dígitos empilhados
+    # Incrementa a quantidade de dígitos gerados
     addiu   $s1, $s1, 1
 
     # Continua extraindo os dígitos restantes
@@ -258,41 +256,39 @@ mmio_int_loop_div:
 
 mmio_int_loop_print:
 
-    # Encerra quando todos os dígitos empilhados forem impressos
+    # Encerra quando todos os dígitos do buffer forem impressos
     blez    $s1, mmio_int_fim
 
-    # Desempilha o próximo dígito ASCII
-    lw      $a0, 0($sp)
-
-    # Restaura o ponteiro da pilha avançando 4 bytes
-    addiu   $sp, $sp, 4
-
-    # Envia o dígito para o Display MMIO
-    jal     mmio_escrever_char
-
-    # Decrementa o contador de dígitos pendentes
+    # Decrementa o índice para ler o próximo dígito na ordem correta
     addiu   $s1, $s1, -1
 
-    # Continua desempilhando e imprimindo
+    # Obtém o caractere do buffer local
+    addu    $t1, $sp, $s1
+    lb      $a0, 0($t1)
+
+    # Envia o dígito para o Display MMIO com $sp estritamente fixo e alinhado
+    jal     mmio_escrever_char
+
+    # Continua imprimindo os dígitos restantes
     j       mmio_int_loop_print
 
 
 mmio_int_fim:
 
     # Restaura o registrador $s2
-    lw      $s2, 12($sp)
+    lw      $s2, 16($sp)
 
     # Restaura o registrador $s1
-    lw      $s1, 16($sp)
+    lw      $s1, 20($sp)
 
     # Restaura o registrador $s0
-    lw      $s0, 20($sp)
+    lw      $s0, 24($sp)
 
     # Restaura o endereço de retorno
-    lw      $ra, 24($sp)
+    lw      $ra, 28($sp)
 
     # Libera o espaço reservado na pilha
-    addiu   $sp, $sp, 28
+    addiu   $sp, $sp, 32
 
     # Retorna ao chamador
     jr      $ra

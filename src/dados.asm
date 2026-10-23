@@ -210,17 +210,17 @@ dados_ap_invalido:
 
 dados_limpar_ap:
 
-    # Reserva espaço para o endereço de retorno e registradores preservados
-    addiu   $sp, $sp, -12
+    # Reserva espaço para o endereço de retorno e registradores preservados (16 bytes, múltiplo de 8)
+    addiu   $sp, $sp, -16
 
     # Salva o endereço de retorno da função
-    sw      $ra, 8($sp)
+    sw      $ra, 12($sp)
 
     # Salva $s0 para guardar o número do apartamento
-    sw      $s0, 4($sp)
+    sw      $s0, 8($sp)
 
     # Salva $s1 para guardar o endereço base do bloco
-    sw      $s1, 0($sp)
+    sw      $s1, 4($sp)
 
     # Guarda o número do apartamento recebido em $a0
     move    $s0, $a0
@@ -269,16 +269,16 @@ dados_loop_limpar_bloco:
 dados_limpar_finalizar:
 
     # Restaura o registrador preservado $s1
-    lw      $s1, 0($sp)
+    lw      $s1, 4($sp)
 
     # Restaura o registrador preservado $s0
-    lw      $s0, 4($sp)
+    lw      $s0, 8($sp)
 
     # Restaura o endereço de retorno original
-    lw      $ra, 8($sp)
+    lw      $ra, 12($sp)
 
     # Libera o espaço reservado na pilha
-    addiu   $sp, $sp, 12
+    addiu   $sp, $sp, 16
 
     # Retorna para o módulo chamador
     jr      $ra

@@ -27,17 +27,17 @@
 
 cadastro_adicionar_morador:
 
-    # Reserva espaço para o endereço de retorno e os registradores salvos
-    addiu   $sp, $sp, -20
+    # Reserva espaço para o endereço de retorno e os registradores salvos (24 bytes, múltiplo de 8)
+    addiu   $sp, $sp, -24
 
     # Salva o endereço de retorno antes de chamar outra função
-    sw      $ra, 16($sp)
+    sw      $ra, 20($sp)
 
     # Salva os registradores preservados utilizados nesta rotina
-    sw      $s0, 12($sp)
-    sw      $s1, 8($sp)
-    sw      $s2, 4($sp)
-    sw      $s3, 0($sp)
+    sw      $s0, 16($sp)
+    sw      $s1, 12($sp)
+    sw      $s2, 8($sp)
+    sw      $s3, 4($sp)
 
     # Guarda o endereço do nome para utilizá-lo depois da busca
     move    $s1, $a1
@@ -104,16 +104,16 @@ cadastro_limite_moradores:
 cadastro_adicionar_morador_finalizar:
 
     # Restaura os registradores preservados pela rotina
-    lw      $s3, 0($sp)
-    lw      $s2, 4($sp)
-    lw      $s1, 8($sp)
-    lw      $s0, 12($sp)
+    lw      $s3, 4($sp)
+    lw      $s2, 8($sp)
+    lw      $s1, 12($sp)
+    lw      $s0, 16($sp)
 
     # Restaura o endereço de retorno original
-    lw      $ra, 16($sp)
+    lw      $ra, 20($sp)
 
     # Libera o espaço reservado na pilha
-    addiu   $sp, $sp, 20
+    addiu   $sp, $sp, 24
 
     # Retorna ao módulo chamador
     jr      $ra
@@ -132,17 +132,17 @@ cadastro_adicionar_morador_finalizar:
 
 cadastro_remover_morador:
 
-    # Reserva espaço para o endereço de retorno e os registradores salvos
-    addiu   $sp, $sp, -20
+    # Reserva espaço para o endereço de retorno e os registradores salvos (24 bytes, múltiplo de 8)
+    addiu   $sp, $sp, -24
 
     # Salva o endereço de retorno da rotina
-    sw      $ra, 16($sp)
+    sw      $ra, 20($sp)
 
     # Salva os registradores preservados que serão utilizados
-    sw      $s0, 12($sp)
-    sw      $s1, 8($sp)
-    sw      $s2, 4($sp)
-    sw      $s3, 0($sp)
+    sw      $s0, 16($sp)
+    sw      $s1, 12($sp)
+    sw      $s2, 8($sp)
+    sw      $s3, 4($sp)
 
     # Guarda o endereço do nome que será pesquisado
     move    $s1, $a1
@@ -310,16 +310,16 @@ cadastro_morador_nao_encontrado:
 cadastro_remover_morador_finalizar:
 
     # Restaura os registradores preservados
-    lw      $s3, 0($sp)
-    lw      $s2, 4($sp)
-    lw      $s1, 8($sp)
-    lw      $s0, 12($sp)
+    lw      $s3, 4($sp)
+    lw      $s2, 8($sp)
+    lw      $s1, 12($sp)
+    lw      $s0, 16($sp)
 
     # Restaura o endereço de retorno original
-    lw      $ra, 16($sp)
+    lw      $ra, 20($sp)
 
     # Libera o espaço utilizado na pilha
-    addiu   $sp, $sp, 20
+    addiu   $sp, $sp, 24
 
     # Retorna ao módulo chamador
     jr      $ra
@@ -341,17 +341,17 @@ cadastro_remover_morador_finalizar:
 
 cadastro_adicionar_auto:
 
-    # Reserva espaço para o endereço de retorno e quatro registradores salvos
-    addiu   $sp, $sp, -20
+    # Reserva espaço para o endereço de retorno e quatro registradores salvos (24 bytes, múltiplo de 8)
+    addiu   $sp, $sp, -24
 
     # Salva o endereço de retorno
-    sw      $ra, 16($sp)
+    sw      $ra, 20($sp)
 
     # Salva o bloco, o tipo e os endereços dos textos recebidos
-    sw      $s0, 12($sp)
-    sw      $s1, 8($sp)
-    sw      $s2, 4($sp)
-    sw      $s3, 0($sp)
+    sw      $s0, 16($sp)
+    sw      $s1, 12($sp)
+    sw      $s2, 8($sp)
+    sw      $s3, 4($sp)
 
     # Guarda o tipo do veículo para uso após a busca
     move    $s1, $a1
@@ -374,7 +374,6 @@ cadastro_adicionar_auto:
 cadastro_tipo_auto_valido:
 
     # Procura o bloco correspondente ao apartamento
-    move    $a1, $s1
     jal     dados_obter_ap
 
     # Encerra se o apartamento não for válido
@@ -484,8 +483,8 @@ cadastro_gravar_auto:
 
 cadastro_tipo_incompativel:
 
-    # Impede a mistura de carros e motos no mesmo apartamento
-    li      $v0, TIPO_INVALIDO
+    # Impede a mistura de carros e motos retornando limite atingido (Issue #14/CT-004)
+    li      $v0, LIMITE_AUTOS_ATINGIDO
 
     # Encerra a rotina sem modificar os dados
     j       cadastro_adicionar_auto_finalizar
@@ -500,16 +499,16 @@ cadastro_limite_auto:
 cadastro_adicionar_auto_finalizar:
 
     # Restaura os registradores preservados
-    lw      $s3, 0($sp)
-    lw      $s2, 4($sp)
-    lw      $s1, 8($sp)
-    lw      $s0, 12($sp)
+    lw      $s3, 4($sp)
+    lw      $s2, 8($sp)
+    lw      $s1, 12($sp)
+    lw      $s0, 16($sp)
 
     # Restaura o endereço de retorno
-    lw      $ra, 16($sp)
+    lw      $ra, 20($sp)
 
     # Libera o espaço reservado na pilha
-    addiu   $sp, $sp, 20
+    addiu   $sp, $sp, 24
 
     # Retorna ao módulo chamador
     jr      $ra
@@ -528,17 +527,17 @@ cadastro_adicionar_auto_finalizar:
 
 cadastro_remover_auto:
 
-    # Reserva espaço para o endereço de retorno e os registradores salvos
-    addiu   $sp, $sp, -20
+    # Reserva espaço para o endereço de retorno e os registradores salvos (24 bytes, múltiplo de 8)
+    addiu   $sp, $sp, -24
 
     # Salva o endereço de retorno
-    sw      $ra, 16($sp)
+    sw      $ra, 20($sp)
 
     # Salva os registradores preservados utilizados na busca
-    sw      $s0, 12($sp)
-    sw      $s1, 8($sp)
-    sw      $s2, 4($sp)
-    sw      $s3, 0($sp)
+    sw      $s0, 16($sp)
+    sw      $s1, 12($sp)
+    sw      $s2, 8($sp)
+    sw      $s3, 4($sp)
 
     # Guarda o endereço da placa procurada
     move    $s1, $a1
@@ -699,16 +698,16 @@ cadastro_auto_nao_encontrado:
 cadastro_remover_auto_finalizar:
 
     # Restaura os registradores preservados
-    lw      $s3, 0($sp)
-    lw      $s2, 4($sp)
-    lw      $s1, 8($sp)
-    lw      $s0, 12($sp)
+    lw      $s3, 4($sp)
+    lw      $s2, 8($sp)
+    lw      $s1, 12($sp)
+    lw      $s0, 16($sp)
 
     # Restaura o endereço de retorno
-    lw      $ra, 16($sp)
+    lw      $ra, 20($sp)
 
     # Libera o espaço reservado na pilha
-    addiu   $sp, $sp, 20
+    addiu   $sp, $sp, 24
 
     # Retorna ao módulo chamador
     jr      $ra
@@ -943,20 +942,20 @@ cadastro_strings_iguais_nao:
 
 cadastro_limpar_ap:
 
-    # Reserva espaço para o endereço de retorno
-    addiu   $sp, $sp, -4
+    # Reserva espaço para o endereço de retorno (alinhado em 8 bytes)
+    addiu   $sp, $sp, -8
 
     # Salva o endereço de retorno da chamada
-    sw      $ra, 0($sp)
+    sw      $ra, 4($sp)
 
     # Invoca a rotina de limpeza completa do bloco mantendo o número
     jal     dados_limpar_ap
 
     # Restaura o endereço de retorno
-    lw      $ra, 0($sp)
+    lw      $ra, 4($sp)
 
     # Libera o espaço reservado na pilha
-    addiu   $sp, $sp, 4
+    addiu   $sp, $sp, 8
 
     # Retorna o código de status resultante em $v0
     jr      $ra

@@ -111,17 +111,17 @@ texto_info_geral_porcento:   .asciiz "%)\n"
 
 consulta_listar_apartamentos:
 
-    # Reserva espaço para o endereço de retorno e os registradores salvos
-    addiu   $sp, $sp, -12
+    # Reserva espaço para o endereço de retorno e os registradores salvos (16 bytes, múltiplo de 8)
+    addiu   $sp, $sp, -16
 
     # Salva o endereço de retorno da rotina
-    sw      $ra, 8($sp)
+    sw      $ra, 12($sp)
 
     # Salva o registrador usado como ponteiro de memória
-    sw      $s0, 4($sp)
+    sw      $s0, 8($sp)
 
     # Salva o registrador usado como contador de apartamentos
-    sw      $s1, 0($sp)
+    sw      $s1, 4($sp)
 
     # Seleciona o serviço de impressão de string do MARS
     li      $v0, 4
@@ -226,16 +226,16 @@ consulta_listar_apartamentos_finalizar:
     li      $v0, OK
 
     # Restaura o contador de apartamentos
-    lw      $s1, 0($sp)
+    lw      $s1, 4($sp)
 
     # Restaura o ponteiro dos blocos
-    lw      $s0, 4($sp)
+    lw      $s0, 8($sp)
 
     # Restaura o endereço de retorno
-    lw      $ra, 8($sp)
+    lw      $ra, 12($sp)
 
     # Libera o espaço usado na pilha
-    addiu   $sp, $sp, 12
+    addiu   $sp, $sp, 16
 
     # Retorna ao módulo chamador
     jr      $ra
@@ -253,23 +253,23 @@ consulta_listar_apartamentos_finalizar:
 
 consulta_listar_moradores:
 
-    # Reserva espaço para o endereço de retorno e os registradores salvos
-    addiu   $sp, $sp, -20
+    # Reserva espaço para o endereço de retorno e os registradores salvos (24 bytes, múltiplo de 8)
+    addiu   $sp, $sp, -24
 
     # Salva o endereço de retorno
-    sw      $ra, 16($sp)
+    sw      $ra, 20($sp)
 
     # Salva o endereço do bloco do apartamento
-    sw      $s0, 12($sp)
+    sw      $s0, 16($sp)
 
     # Salva o número do apartamento recebido
-    sw      $s1, 8($sp)
+    sw      $s1, 12($sp)
 
     # Salva a quantidade de moradores
-    sw      $s2, 4($sp)
+    sw      $s2, 8($sp)
 
     # Salva o índice do morador atual
-    sw      $s3, 0($sp)
+    sw      $s3, 4($sp)
 
     # Guarda o número do apartamento para uso posterior
     move    $s1, $a0
@@ -380,22 +380,22 @@ consulta_listar_moradores_sucesso:
 consulta_listar_moradores_finalizar:
 
     # Restaura o índice do morador
-    lw      $s3, 0($sp)
+    lw      $s3, 4($sp)
 
     # Restaura a quantidade de moradores
-    lw      $s2, 4($sp)
+    lw      $s2, 8($sp)
 
     # Restaura o número do apartamento
-    lw      $s1, 8($sp)
+    lw      $s1, 12($sp)
 
     # Restaura o endereço do bloco
-    lw      $s0, 12($sp)
+    lw      $s0, 16($sp)
 
     # Restaura o endereço de retorno
-    lw      $ra, 16($sp)
+    lw      $ra, 20($sp)
 
     # Libera o espaço reservado na pilha
-    addiu   $sp, $sp, 20
+    addiu   $sp, $sp, 24
 
     # Retorna ao módulo chamador
     jr      $ra
@@ -413,23 +413,23 @@ consulta_listar_moradores_finalizar:
 
 consulta_listar_automoveis:
 
-    # Reserva espaço para o endereço de retorno e os registradores salvos
-    addiu   $sp, $sp, -20
+    # Reserva espaço para o endereço de retorno e os registradores salvos (24 bytes, múltiplo de 8)
+    addiu   $sp, $sp, -24
 
     # Salva o endereço de retorno
-    sw      $ra, 16($sp)
+    sw      $ra, 20($sp)
 
     # Salva o endereço do bloco
-    sw      $s0, 12($sp)
+    sw      $s0, 16($sp)
 
     # Salva o número do apartamento
-    sw      $s1, 8($sp)
+    sw      $s1, 12($sp)
 
     # Salva a quantidade de veículos
-    sw      $s2, 4($sp)
+    sw      $s2, 8($sp)
 
     # Salva o índice do veículo atual
-    sw      $s3, 0($sp)
+    sw      $s3, 4($sp)
 
     # Guarda o número do apartamento
     move    $s1, $a0
@@ -609,22 +609,22 @@ consulta_listar_automoveis_sucesso:
 consulta_listar_automoveis_finalizar:
 
     # Restaura o índice do veículo
-    lw      $s3, 0($sp)
+    lw      $s3, 4($sp)
 
     # Restaura a quantidade de veículos
-    lw      $s2, 4($sp)
+    lw      $s2, 8($sp)
 
     # Restaura o número do apartamento
-    lw      $s1, 8($sp)
+    lw      $s1, 12($sp)
 
     # Restaura o endereço do bloco
-    lw      $s0, 12($sp)
+    lw      $s0, 16($sp)
 
     # Restaura o endereço de retorno
-    lw      $ra, 16($sp)
+    lw      $ra, 20($sp)
 
     # Libera o espaço usado na pilha
-    addiu   $sp, $sp, 20
+    addiu   $sp, $sp, 24
 
     # Retorna ao módulo chamador
     jr      $ra

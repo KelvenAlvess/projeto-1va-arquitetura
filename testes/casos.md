@@ -19,6 +19,7 @@ Este documento detalha o conjunto oficial de casos de teste para validação no 
 | **CT-009** | cmd_6, R6 | Consultas `infoAp` e flag `--all` | Layout condicional: AP vazio exibe `Apartamento vazio`; ocupado exibe moradores e veículos |
 | **CT-010** | cmd_7, R6 | Panorama geral com `infoGeral` | Total de 24 apartamentos e porcentagens exatas |
 | **CT-011** | R3, cmd_8, 9, 10 | Ciclo de vida de persistência em disco | `salvar` grava em disco; `formatar` zera apenas RAM; `recarregar` restaura arquivo anterior |
+| **CT-012** | R1, R2, R6, cmd_1 a 7 | Bateria exaustiva de regras de domínio, limites, cascata e integridade | Exercitar lotação de 6 moradores compostos, 7º rejeitado, exclusividade carro/moto, 3 motos, tipo inválido, remoção inexistente, purga compulsória de veículos e não-corrupção dos demais 23 APs |
 
 ---
 
@@ -85,3 +86,31 @@ Este documento detalha o conjunto oficial de casos de teste para validação no 
   4. Executar `infoAp --501` (mostra `Apartamento vazio`).
   5. Executar `recarregar`.
   6. Executar `infoAp --501` (morador reaparece).
+
+### CT-012 — Bateria Exaustiva de Regras de Domínio e Limites
+- **Arquivos:** `src/testes/teste_dominio_regras.txt`, `testes/entradas/teste_dominio_regras.txt`, `testes/esperados/saida_teste_dominio_regras.txt`
+- **Comando de Execução:** `powershell -File scripts/executar_testes.ps1 -Teste dominio`
+- **Entrada e Sequência Validada:**
+  1. **Isolamento e Sentinelas:** Inicializa com `formatar`, valida `infoGeral` (24 vazios, 100%), cadastra sentinelas em AP 101 (morador + carro) e AP 1202 (morador).
+  2. **Lotação Máxima (6) com Nomes Compostos:** Cadastra 6 moradores no AP 201 (`Carlos Eduardo Silva`, `Maria Fernanda Oliveira`, `Joao Pedro Santos`, `Ana Paula Souza`, `Lucas Gabriel Pereira`, `Beatriz Helena Lima`).
+  3. **Tentativa do 7º Morador:** `addMorador --201 --Setimo Morador Excedente` retorna `Falha: AP com numero max de moradores`.
+  4. **Remoção de Morador Inexistente:** `rmvMorador --201 --Morador Fantasma Inexistente` retorna `Falha: morador nao encontrado`.
+  5. **Regras de Carro e Incompatibilidade:**
+     - Cadastra carro `Toyota Corolla / ABC1234` no AP 201 com sucesso.
+     - Tenta cadastrar 2º carro: retorna `Falha: AP com numero max de automóveis`.
+     - Tenta cadastrar moto: retorna `Falha: AP com numero max de automóveis`.
+  6. **Tipo Inválido:** `addAuto --201 --x --Veiculo Invalido --INV0000` retorna `Falha: tipo invalido`.
+  7. **Remoção de Veículo Inexistente:** `rmvAuto --201 --PLK9999` retorna `Falha: automóvel nao encontrado`.
+  8. **Regras de Motos e Capacidade (AP 301):**
+     - Cadastra 3 motos (`MOT1001`, `MOT1002`, `MOT1003`) com sucesso.
+     - Tenta cadastrar 4ª moto: retorna `Falha: AP com numero max de automóveis`.
+     - Tenta cadastrar carro onde há motos: retorna `Falha: AP com numero max de automóveis`.
+     - Remove moto `MOT1002`: sucesso comprovado via `infoAp --301`.
+  9. **Esvaziamento Compulsório de Veículos:**
+     - Remove 5 moradores do AP 201 (permanece 1 morador e o carro).
+     - Remove o último morador (`Beatriz Helena Lima`).
+     - `infoAp --201` comprova status `Apartamento vazio`.
+     - `rmvAuto --201 --ABC1234` retorna `Falha: automóvel nao encontrado`, provando a purga compulsória de veículos.
+  10. **Preservação dos Demais Apartamentos:**
+      - Verifica AP 101, AP 1202 e AP 301 totalmente íntegros.
+      - Limpa os apartamentos e valida com `infoGeral` o retorno para 24 vazios (100%).

@@ -220,6 +220,17 @@ persist_carregar_erro_fechando:
 
 persist_carregar_erro:
 
+    # Workaround essencial para bug nativo do MARS 4.5 (mars.util.SystemIO.openFile):
+    # Ao abrir arquivo inexistente em modo leitura (O_RDONLY), o MARS reserva o primeiro
+    # descritor livre (fd = 3, após STDIN=0, STDOUT=1, STDERR=2) em FileIOData.nowOpening(),
+    # mas ao capturar FileNotFoundException (SystemIO.java:441) retorna -1 sem invocar
+    # FileIOData.close(fdToUse). Isso deixa o nome "condominio.dat" travado em fileNames[3],
+    # fazendo com que futuras chamadas a persist_salvar falhem com "File already open".
+    # O syscall 16 em fd = 3 limpa fileNames[3] = null com segurança no MARS.
+    li      $a0, 3
+    li      $v0, 16
+    syscall
+
     # Define o código de erro quando a abertura falha
     li      $v0, ERRO_ARQUIVO
 
@@ -476,20 +487,20 @@ persist_encerrar_sucesso:
 
 persist_recarregar:
 
-    # Reserva espaço na pilha para o endereço de retorno
-    addiu   $sp, $sp, -4
+    # Reserva espaço na pilha alinhado em 8 bytes
+    addiu   $sp, $sp, -8
 
     # Salva o endereço de retorno
-    sw      $ra, 0($sp)
+    sw      $ra, 4($sp)
 
     # Invoca o carregamento dos registros a partir do arquivo
     jal     persist_carregar
 
     # Restaura o endereço de retorno
-    lw      $ra, 0($sp)
+    lw      $ra, 4($sp)
 
     # Libera o espaço reservado na pilha
-    addiu   $sp, $sp, 4
+    addiu   $sp, $sp, 8
 
     # Retorna o status resultante em $v0
     jr      $ra
@@ -507,20 +518,20 @@ persist_recarregar:
 
 persist_formatar:
 
-    # Reserva espaço na pilha para o endereço de retorno
-    addiu   $sp, $sp, -4
+    # Reserva espaço na pilha alinhado em 8 bytes
+    addiu   $sp, $sp, -8
 
     # Salva o endereço de retorno
-    sw      $ra, 0($sp)
+    sw      $ra, 4($sp)
 
     # Reinicializa toda a tabela de apartamentos em memória
     jal     dados_inicializar
 
     # Restaura o endereço de retorno
-    lw      $ra, 0($sp)
+    lw      $ra, 4($sp)
 
     # Libera o espaço reservado na pilha
-    addiu   $sp, $sp, 4
+    addiu   $sp, $sp, 8
 
     # Define o retorno de sucesso
     li      $v0, OK

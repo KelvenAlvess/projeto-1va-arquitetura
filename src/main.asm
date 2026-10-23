@@ -56,11 +56,15 @@ j       main
 
 main:
 
-    # Reserva espaço para salvar o endereço de retorno
-    addiu   $sp, $sp, -4
+    # Garante alinhamento inicial da pilha em 8 bytes no MARS (que inicia em 0x7fffeffc)
+    li      $t0, -8
+    and     $sp, $sp, $t0
+
+    # Reserva espaço para salvar o endereço de retorno (alinhado em 8 bytes)
+    addiu   $sp, $sp, -8
 
     # Salva o endereço de retorno da rotina principal
-    sw      $ra, 0($sp)
+    sw      $ra, 4($sp)
 
     # Inicializa os 24 blocos de apartamentos
     jal     dados_inicializar
@@ -90,10 +94,10 @@ main_inicializar_shell:
     jal     persist_encerrar
 
     # Restaura o endereço de retorno salvo no início
-    lw      $ra, 0($sp)
+    lw      $ra, 4($sp)
 
     # Libera o espaço reservado na pilha
-    addiu   $sp, $sp, 4
+    addiu   $sp, $sp, 8
 
     # Seleciona a chamada de sistema de encerramento
     li      $v0, 10

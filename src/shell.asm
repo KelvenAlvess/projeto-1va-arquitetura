@@ -522,11 +522,17 @@ shell_parser_fim:
 
 shell_despachar_comando:
 
-    # Reserva espaço na pilha para chamada de sub-rotinas
-    addiu   $sp, $sp, -4
+    # Reserva espaço na pilha para retorno e registradores salvos (16 bytes, múltiplo de 8)
+    addiu   $sp, $sp, -16
 
-    # Salva o endereço de retorno
-    sw      $ra, 0($sp)
+    # Salva o endereço de retorno da sub-rotina
+    sw      $ra, 12($sp)
+
+    # Salva $s0 para preservar o contexto do chamador
+    sw      $s0, 8($sp)
+
+    # Salva $s1 para preservar o contexto do chamador
+    sw      $s1, 4($sp)
 
     # 1. Comando addMorador
     la      $a0, shell_cmd_token
@@ -1069,11 +1075,17 @@ shell_erro_ap_invalido:
 
 shell_despacho_fim:
 
+    # Restaura o registrador preservado $s1
+    lw      $s1, 4($sp)
+
+    # Restaura o registrador preservado $s0
+    lw      $s0, 8($sp)
+
     # Restaura o endereço de retorno
-    lw      $ra, 0($sp)
+    lw      $ra, 12($sp)
 
     # Libera espaço da pilha
-    addiu   $sp, $sp, 4
+    addiu   $sp, $sp, 16
 
     # Retorna
     jr      $ra
@@ -1222,11 +1234,11 @@ shell_imprimir_erro_retorno:
     # Sucesso não gera mensagem no terminal
     beq     $a0, OK, shell_erro_msg_fim
 
-    # Reserva espaço na pilha para chamada de sub-rotina de I/O
-    addiu   $sp, $sp, -4
+    # Reserva espaço na pilha alinhado em 8 bytes
+    addiu   $sp, $sp, -8
 
     # Salva o endereço de retorno
-    sw      $ra, 0($sp)
+    sw      $ra, 4($sp)
 
     # Código AP_INVALIDO
     li      $t0, AP_INVALIDO
@@ -1296,8 +1308,8 @@ shell_erro_msg_lim_autos:
     j       shell_erro_msg_retorna          # Desvia para restauração de pilha
 
 shell_erro_msg_retorna:
-    lw      $ra, 0($sp)                     # Restaura o endereço de retorno
-    addiu   $sp, $sp, 4                     # Libera espaço alocado na pilha
+    lw      $ra, 4($sp)                     # Restaura o endereço de retorno
+    addiu   $sp, $sp, 8                     # Libera espaço alocado na pilha
     jr      $ra                             # Retorna ao despachante
 
 shell_erro_msg_fim:

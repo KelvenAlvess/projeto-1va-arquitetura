@@ -1,0 +1,82 @@
+KJP-shell>> KJP-shell>> Nao vazios: 0 (0%)
+Vazios: 24 (100%)
+KJP-shell>> KJP-shell>> KJP-shell>> KJP-shell>> AP: 101
+Moradores:
+Morador Sentinela Um
+Carro:
+Carro Sentinela / SEN1000
+KJP-shell>> AP: 1202
+Moradores:
+Morador Sentinela Doze
+KJP-shell>> KJP-shell>> KJP-shell>> KJP-shell>> KJP-shell>> KJP-shell>> KJP-shell>> AP: 201
+Moradores:
+Carlos Eduardo Silva
+Maria Fernanda Oliveira
+Joao Pedro Santos
+Ana Paula Souza
+Lucas Gabriel Pereira
+Beatriz Helena Lima
+KJP-shell>> Falha: AP com numero max de moradores
+KJP-shell>> AP: 201
+Moradores:
+Carlos Eduardo Silva
+Maria Fernanda Oliveira
+Joao Pedro Santos
+Ana Paula Souza
+Lucas Gabriel Pereira
+Beatriz Helena Lima
+KJP-shell>> Falha: morador nao encontrado
+KJP-shell>> KJP-shell>> Falha: AP com numero max de automóveis
+KJP-shell>> Falha: AP com numero max de automóveis
+KJP-shell>> Falha: tipo invalido
+KJP-shell>> Falha: automóvel nao encontrado
+KJP-shell>> AP: 201
+Moradores:
+Carlos Eduardo Silva
+Maria Fernanda Oliveira
+Joao Pedro Santos
+Ana Paula Souza
+Lucas Gabriel Pereira
+Beatriz Helena Lima
+Carro:
+Toyota Corolla / ABC1234
+KJP-shell>> KJP-shell>> KJP-shell>> KJP-shell>> KJP-shell>> Falha: AP com numero max de automóveis
+KJP-shell>> Falha: AP com numero max de automóveis
+KJP-shell>> AP: 301
+Moradores:
+Roberto Carlos Braga
+Moto:
+Honda CG160 / MOT1001
+Yamaha MT03 / MOT1002
+Kawasaki Ninja / MOT1003
+KJP-shell>> KJP-shell>> AP: 301
+Moradores:
+Roberto Carlos Braga
+Moto:
+Honda CG160 / MOT1001
+Kawasaki Ninja / MOT1003
+KJP-shell>> KJP-shell>> KJP-shell>> KJP-shell>> KJP-shell>> KJP-shell>> AP: 201
+Moradores:
+Beatriz Helena Lima
+Carro:
+Toyota Corolla / ABC1234
+KJP-shell>> KJP-shell>> AP: 201
+Apartamento vazio
+KJP-shell>> Falha: automóvel nao encontrado
+KJP-shell>> AP: 101
+Moradores:
+Morador Sentinela Um
+Carro:
+Carro Sentinela / SEN1000
+KJP-shell>> AP: 1202
+Moradores:
+Morador Sentinela Doze
+KJP-shell>> AP: 301
+Moradores:
+Roberto Carlos Braga
+Moto:
+Honda CG160 / MOT1001
+Kawasaki Ninja / MOT1003
+KJP-shell>> KJP-shell>> KJP-shell>> KJP-shell>> Nao vazios: 0 (0%)
+Vazios: 24 (100%)
+KJP-shell>> 
