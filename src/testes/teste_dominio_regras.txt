@@ -1,0 +1,48 @@
+formatar
+infoGeral
+addMorador --101 --Morador Sentinela Um
+addAuto --101 --c --Carro Sentinela --SEN1000
+addMorador --1202 --Morador Sentinela Doze
+infoAp --101
+infoAp --1202
+addMorador --201 --Carlos Eduardo Silva
+addMorador --201 --Maria Fernanda Oliveira
+addMorador --201 --Joao Pedro Santos
+addMorador --201 --Ana Paula Souza
+addMorador --201 --Lucas Gabriel Pereira
+addMorador --201 --Beatriz Helena Lima
+infoAp --201
+addMorador --201 --Setimo Morador Excedente
+infoAp --201
+rmvMorador --201 --Morador Fantasma Inexistente
+addAuto --201 --c --Toyota Corolla --ABC1234
+addAuto --201 --c --Honda Civic --DEF5678
+addAuto --201 --m --Yamaha Fazer --XYZ9999
+addAuto --201 --x --Veiculo Invalido --INV0000
+rmvAuto --201 --PLK9999
+infoAp --201
+addMorador --301 --Roberto Carlos Braga
+addAuto --301 --m --Honda CG160 --MOT1001
+addAuto --301 --m --Yamaha MT03 --MOT1002
+addAuto --301 --m --Kawasaki Ninja --MOT1003
+addAuto --301 --m --Suzuki Hayabusa --MOT1004
+addAuto --301 --c --Carro Incompativel --CAR1001
+infoAp --301
+rmvAuto --301 --MOT1002
+infoAp --301
+rmvMorador --201 --Carlos Eduardo Silva
+rmvMorador --201 --Maria Fernanda Oliveira
+rmvMorador --201 --Joao Pedro Santos
+rmvMorador --201 --Ana Paula Souza
+rmvMorador --201 --Lucas Gabriel Pereira
+infoAp --201
+rmvMorador --201 --Beatriz Helena Lima
+infoAp --201
+rmvAuto --201 --ABC1234
+infoAp --all
+limparAp --101
+limparAp --301
+limparAp --1202
+infoGeral
+infoAp --all
+sair

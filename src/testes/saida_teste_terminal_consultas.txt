@@ -1,0 +1,97 @@
+KJP-shell>> KJP-shell>> Comando invalido
+KJP-shell>> Comando invalido
+KJP-shell>> Comando invalido
+KJP-shell>> Comando invalido
+KJP-shell>> Comando invalido
+KJP-shell>> KJP-shell>> KJP-shell>> AP: 102
+Apartamento vazio
+KJP-shell>> AP: 101
+Moradores:
+Maria Antonieta de Albuquerque
+Carro:
+Chevrolet Onix Plus Sedan / ABC1D23
+KJP-shell>> KJP-shell>> KJP-shell>> KJP-shell>> KJP-shell>> KJP-shell>> Nao vazios: 6 (25%)
+Vazios: 18 (75%)
+KJP-shell>> KJP-shell>> KJP-shell>> KJP-shell>> KJP-shell>> KJP-shell>> KJP-shell>> Nao vazios: 12 (50%)
+Vazios: 12 (50%)
+KJP-shell>> KJP-shell>> KJP-shell>> KJP-shell>> KJP-shell>> KJP-shell>> KJP-shell>> Nao vazios: 18 (75%)
+Vazios: 6 (25%)
+KJP-shell>> KJP-shell>> KJP-shell>> KJP-shell>> KJP-shell>> KJP-shell>> KJP-shell>> Nao vazios: 24 (100%)
+Vazios: 0 (0%)
+KJP-shell>> AP: 101
+Moradores:
+Maria Antonieta de Albuquerque
+Carro:
+Chevrolet Onix Plus Sedan / ABC1D23
+AP: 102
+Moradores:
+Morador Cem Dois
+AP: 201
+Moradores:
+Morador Duzentos Um
+AP: 202
+Moradores:
+Morador Duzentos Dois
+AP: 301
+Moradores:
+Morador Trezentos Um
+AP: 302
+Moradores:
+Morador Trezentos Dois
+AP: 401
+Moradores:
+Morador Quatrocentos Um
+AP: 402
+Moradores:
+Morador Quatrocentos Dois
+AP: 501
+Moradores:
+Morador Quinhentos Um
+AP: 502
+Moradores:
+Morador Quinhentos Dois
+AP: 601
+Moradores:
+Morador Seiscentos Um
+AP: 602
+Moradores:
+Morador Seiscentos Dois
+AP: 701
+Moradores:
+Morador Setecentos Um
+AP: 702
+Moradores:
+Morador Setecentos Dois
+AP: 801
+Moradores:
+Morador Oitocentos Um
+AP: 802
+Moradores:
+Morador Oitocentos Dois
+AP: 901
+Moradores:
+Morador Novecentos Um
+AP: 902
+Moradores:
+Morador Novecentos Dois
+AP: 1001
+Moradores:
+Morador Mil Um
+AP: 1002
+Moradores:
+Morador Mil Dois
+AP: 1101
+Moradores:
+Morador Mil Cento Um
+AP: 1102
+Moradores:
+Morador Mil Cento Dois
+AP: 1201
+Moradores:
+Morador Mil Duzentos Um
+AP: 1202
+Moradores:
+Morador Mil Duzentos Dois
+KJP-shell>> KJP-shell>> Nao vazios: 0 (0%)
+Vazios: 24 (100%)
+KJP-shell>> 
